@@ -7,6 +7,8 @@ import '../components/snackBar.dart';
 import '../employee/employe_project_view.dart';
 import '../entity/user.dart';
 import '../manager/manager_home.dart';
+import '../providers/AdvisorProvider.dart';
+import '../providers/EmployeeProvider.dart';
 import 'authetication.dart';
 
 class UserController {
@@ -60,18 +62,28 @@ class UserController {
         'password_param': password,
       });
       final user = AppUser.fromJson(response);
-      Authentication auth = Authentication();
+      QueriesFunctions auth = QueriesFunctions();
       bool isAdvisor = await auth.isAdvisor(user.id);
-      print(isAdvisor);
+      if (isAdvisor) {
+        AdvisorProvider().ifAdvisorSetAdvisorId(user.id);
+      } else {
+        EmployeeProvider().ifEmployeeSetEmployee(user.id);
+      }
+
       isAdvisor
           ? Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const ManagerHome()),
+              MaterialPageRoute(
+                  builder: (context) => ManagerHome(
+                        advisorId: user.id,
+                      )),
             )
           : Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const EmployeeProjectView()),
+                  builder: (context) => EmployeeProjectView(
+                        projectId: user.id,
+                      )),
             );
       return user;
     } catch (e, stackTrace) {

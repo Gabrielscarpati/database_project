@@ -1,16 +1,24 @@
 import 'package:database_project/components/ds_floating_action_button.dart';
-import 'package:database_project/components/ds_project_display_title.dart';
+import 'package:database_project/components/ds_future_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../components/DS_app_bar.dart';
+import '../components/ds_project_display_title.dart';
+import '../entity/project.dart';
+import '../providers/AdvisorProvider.dart';
 import 'create_project_screen.dart';
-import 'manager_project_view.dart';
 
 class ManagerHome extends StatelessWidget {
-  const ManagerHome({Key? key}) : super(key: key);
+  final int advisorId;
+  const ManagerHome({Key? key, required this.advisorId}) : super(key: key);
 
+  //AdvisorProvider
   @override
   Widget build(BuildContext context) {
+    AdvisorProvider advisorProvider =
+        Provider.of<AdvisorProvider>(context, listen: false);
+
     return SafeArea(
       child: Scaffold(
         appBar: const DSAppBar(
@@ -19,57 +27,24 @@ class ManagerHome extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.all(12.0),
-          child: Column(
-            children: [
-              DSProjectDisplayTitle(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ManagerProjectView(),
-                    ),
+          child: DSFutureBuilder(
+            future: advisorProvider.fetchProjectsByAdvisor(),
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Project>> snapshot) {
+              List<Project> projects = snapshot.data!;
+              return ListView.builder(
+                itemCount: projects.length,
+                itemBuilder: (context, index) {
+                  return DSProjectDisplayTitle(
+                    onTap: () {},
+                    projectTitle: projects[index].title,
+                    dueDate: projects[index].dateDue,
+                    projectId: projects[index].id,
                   );
                 },
-                projectTitle: 'Expense Tracker App',
-                dueDate: DateTime(2024, 12, 15),
-              ),
-              DSProjectDisplayTitle(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ManagerProjectView(),
-                    ),
-                  );
-                },
-                projectTitle: 'E-commerce Mobile App',
-                dueDate: DateTime(2025, 01, 30),
-              ),
-              DSProjectDisplayTitle(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ManagerProjectView(),
-                    ),
-                  );
-                },
-                projectTitle: 'Fitness Workout Planner',
-                dueDate: DateTime(2025, 03, 10),
-              ),
-              DSProjectDisplayTitle(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ManagerProjectView(),
-                    ),
-                  );
-                },
-                projectTitle: 'Travel Journal App',
-                dueDate: DateTime(2025, 04, 25),
-              ),
-            ],
+              );
+            },
+            messageWhenEmpty: '',
           ),
         ),
         floatingActionButton: DsFloatingActionButton(
@@ -77,7 +52,9 @@ class ManagerHome extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const CreateProjectScreen()),
+                  builder: (context) => CreateProjectScreen(
+                        advisorId: advisorId,
+                      )),
             );
           },
         ),

@@ -16,22 +16,22 @@ class Project extends Entity {
 
   factory Project.fromJson(Map<String, dynamic> json) {
     return Project(
-      id: json['projectId'] as int,
-      dateCreated: DateTime.parse(json['dateCreated'] as String),
-      dateDue: DateTime.parse(json['dateDue'] as String),
-      title: json['title'] as String,
-      advisorId: json['advisorId'] as int,
+      id: json['projectid'] as int,
+      dateCreated: DateTime.parse(json['projectdatecreated'] as String),
+      dateDue: DateTime.parse(json['projectdatedue'] as String),
+      title: json['projecttitle'] as String,
+      advisorId: json['advisorid'] as int,
     );
   }
 
   @override
   Map<String, dynamic> toJson() {
     return {
-      'projectId': id,
-      'dateCreated': dateCreated.toIso8601String(),
-      'dateDue': dateDue.toIso8601String(),
-      'title': title,
-      'advisorId': advisorId,
+      'projectid': id,
+      'projectdatecreated': dateCreated.toIso8601String(),
+      'projectdatedue': dateDue.toIso8601String(),
+      'projecttitle': title,
+      'advisorid': advisorId,
     };
   }
 

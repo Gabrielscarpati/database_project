@@ -8,14 +8,14 @@ class DSTaskDisplayTile extends StatelessWidget {
   final String taskDescription;
   final DateTime dueDate;
   final DateTime createdDate;
-  final String? assignedTo;
+  final String assignedTo;
   const DSTaskDisplayTile({
     Key? key,
     required this.taskName,
     required this.taskDescription,
     required this.dueDate,
     required this.createdDate,
-    this.assignedTo,
+    required this.assignedTo,
   }) : super(key: key);
 
   @override
@@ -56,27 +56,25 @@ class DSTaskDisplayTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      assignedTo == true
-                          ? Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const DSStandardText(
-                                  text: 'Assigned to',
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: DSColors.white,
-                                ),
-                                DSStandardText(
-                                  text: assignedTo!,
-                                  textAlign: TextAlign.left,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.normal,
-                                  color: DSColors.white,
-                                ),
-                              ],
-                            )
-                          : const SizedBox(),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const DSStandardText(
+                            text: 'Assigned to',
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: DSColors.white,
+                          ),
+                          DSStandardText(
+                            text: assignedTo,
+                            textAlign: TextAlign.left,
+                            fontSize: 12,
+                            fontWeight: FontWeight.normal,
+                            color: DSColors.white,
+                          ),
+                        ],
+                      ),
                       const SizedBox(
                         height: 16.0,
                       ),

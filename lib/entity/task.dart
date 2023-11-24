@@ -7,6 +7,8 @@ class Task extends Entity {
   final String description;
   final DateTime dateCreated;
   final DateTime dateDue;
+  final String lastname;
+  final String firstname;
 
   Task({
     required super.id,
@@ -16,30 +18,36 @@ class Task extends Entity {
     required this.description,
     required this.dateCreated,
     required this.dateDue,
+    required this.lastname,
+    required this.firstname,
   });
 
   factory Task.fromJson(Map<String, dynamic> json) {
+    print(json);
     return Task(
-      id: json['taskId'] as int,
-      projectId: json['projectId'] as int,
-      employeeId: json['employeeId'] as int,
-      name: json['taskName'] as String,
-      description: json['taskDescription'] as String,
-      dateCreated: DateTime.parse(json['taskDateCreated'] as String),
-      dateDue: DateTime.parse(json['taskDateDue'] as String),
-    );
+        id: json['taskid'] as int,
+        projectId: json['projectid'] as int,
+        employeeId: json['employeeid'] as int,
+        name: json['taskname'] as String,
+        description: json['taskdescription'] as String,
+        dateCreated: DateTime.parse(json['taskdatecreated'] as String),
+        dateDue: DateTime.parse(json['taskdatedue'] as String),
+        lastname: json['lastname'] ?? '',
+        firstname: json['firstname'] ?? '');
   }
 
   @override
   Map<String, dynamic> toJson() {
     return {
-      'taskId': id,
-      'projectId': projectId,
-      'employeeId': employeeId,
-      'taskName': name,
-      'taskDescription': description,
-      'taskDateCreated': dateCreated.toIso8601String(),
-      'taskDateDue': dateDue.toIso8601String(),
+      'taskid': id,
+      'projectid': projectId,
+      'employeeid': employeeId,
+      'taskname': name,
+      'taskdescription': description,
+      'taskdatecreated': dateCreated.toIso8601String(),
+      'taskdatedue': dateDue.toIso8601String(),
+      'lastname': lastname,
+      'firstname': firstname,
     };
   }
 
@@ -51,6 +59,8 @@ class Task extends Entity {
     String? description,
     DateTime? dateCreated,
     DateTime? dateDue,
+    String? lastname,
+    String? firstname,
   }) {
     return Task(
       id: id ?? this.id,
@@ -60,6 +70,8 @@ class Task extends Entity {
       description: description ?? this.description,
       dateCreated: dateCreated ?? this.dateCreated,
       dateDue: dateDue ?? this.dateDue,
+      lastname: lastname ?? this.lastname,
+      firstname: firstname ?? this.firstname,
     );
   }
 }

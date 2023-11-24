@@ -11,6 +11,7 @@ class CustomTextField extends StatefulWidget {
   final IconData? suffixIcon;
   final String hint;
   final String title;
+  final void Function(String)? onChange;
 
   const CustomTextField({
     Key? key,
@@ -21,6 +22,7 @@ class CustomTextField extends StatefulWidget {
     this.prefixIcon,
     this.suffixIcon,
     required this.title,
+    this.onChange,
   }) : super(key: key);
 
   @override
@@ -54,6 +56,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               fontSize: 16,
               color: DSColors.primaryTextBlack,
             ),
+            onChanged: widget.onChange,
             controller: widget.texFieldController,
             cursorColor: DSColors.darkPurple,
             maxLines: null,
