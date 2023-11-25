@@ -2,6 +2,7 @@ import 'package:database_project/colors.dart';
 import 'package:database_project/providers/AdvisorProvider.dart';
 import 'package:database_project/providers/EmployeeProvider.dart';
 import 'package:database_project/providers/ProjectProvider.dart';
+import 'package:database_project/providers/TaskProvider.dart';
 import 'package:database_project/providers/logInSignUpProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,6 +40,9 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => EmployeeProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TaskProvider(),
         ),
       ],
       child: const MyApp(),

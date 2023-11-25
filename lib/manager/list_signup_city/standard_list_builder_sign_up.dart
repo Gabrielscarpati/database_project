@@ -127,16 +127,15 @@ class ListBuilderSelectedCities extends StatelessWidget {
 
 class ChooseEmployeeTile extends StatelessWidget {
   final String employeeName;
-  final Function() onTap;
-  const ChooseEmployeeTile(
-      {Key? key, required this.employeeName, required this.onTap})
+  final Function()? onTap;
+  const ChooseEmployeeTile({Key? key, required this.employeeName, this.onTap})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        onTap.call();
+        onTap!.call();
       },
       child: Container(
         height: 60,

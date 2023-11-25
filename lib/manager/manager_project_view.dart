@@ -21,7 +21,9 @@ class ManagerProjectView extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const CreateTaskScreen()),
+              MaterialPageRoute(
+                builder: (context) => CreateTaskScreen(projectId: projectId),
+              ),
             );
           },
         ),

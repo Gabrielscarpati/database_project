@@ -9,4 +9,5 @@ class DSColors {
   static const Color primaryTextBlack = Color(0xFF333333);
   static const Color transparent = Colors.transparent;
   static const Color accentsErrorRed = Color(0xFFFF3232);
+  static const Color greyScaleMediumGrey = Color(0xFFC2C1C2);
 }

@@ -31,4 +31,10 @@ class ProjectProvider with ChangeNotifier {
     projects = await queriesFunctions.getProjectsByAdvisor(advisorId);
     return projects;
   }
+
+  DateTime selectedProjectCreationDateDateTime = DateTime.now();
+  void setSelectedProjectCreationDate(DateTime date) {
+    selectedProjectCreationDateDateTime = date;
+    notifyListeners();
+  }
 }

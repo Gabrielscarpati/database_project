@@ -13,7 +13,6 @@ class ManagerHome extends StatelessWidget {
   final int advisorId;
   const ManagerHome({Key? key, required this.advisorId}) : super(key: key);
 
-  //AdvisorProvider
   @override
   Widget build(BuildContext context) {
     AdvisorProvider advisorProvider =

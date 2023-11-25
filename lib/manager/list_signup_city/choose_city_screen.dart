@@ -94,6 +94,8 @@ class _ChooseCityScreenState extends State<ChooseCityScreen> {
                 LoadingButton(
                   buttonText: 'Done',
                   goNextScreen: () async {
+                    Navigator.pop(context);
+
                     _controller.reset();
                   },
                   controller: _controller,

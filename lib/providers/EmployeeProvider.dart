@@ -57,7 +57,8 @@ class EmployeeProvider with ChangeNotifier {
     } else {
       ShowSnackBar(context: context, doesItAppearAtTheBottom: true)
           .showErrorSnackBar(
-        message: "You can only choose 3 employees",
+        message: ""
+            "You can only choose at most 4 employees",
         color: DSColors.accentsErrorRed,
       );
     }
@@ -65,19 +66,29 @@ class EmployeeProvider with ChangeNotifier {
 
   Future<List<AppUser>> fetchAvailableEmployees() async {
     allAvailableEmployees = [];
-    allAvailableEmployees = await queriesFunctions.getAvailableEmployees();
-    return allAvailableEmployees;
-  }
+    List<AppUser> allAvailableEmployeesLocal =
+        await queriesFunctions.getAvailableEmployees();
 
-  /*void onSearchEmployee(String value) {
-    availableEmployeesScreen = [];
-    for (AppUser user in allAvailableEmployees) {
-      if (("${user.firstName} ${user.firstName}")
-          .toLowerCase()
-          .contains(value.toLowerCase())) {
-        availableEmployeesScreen.add(user);
+    bool flagAllAvailableEmployees = true;
+    bool flagAvailableEmployeesScreen = true;
+
+    for (AppUser employee in allAvailableEmployeesLocal) {
+      for (AppUser employeeInner in allAvailableEmployees) {
+        if (employeeInner.id == employee.id) {
+          flagAvailableEmployeesScreen = false;
+        }
+      }
+      for (AppUser employeeInner in availableEmployeesScreen) {
+        if (employeeInner.id == employee.id) {
+          flagAllAvailableEmployees = false;
+        }
+      }
+      if (flagAvailableEmployeesScreen == false ||
+          flagAllAvailableEmployees == false) {
+      } else {
+        allAvailableEmployees.add(employee);
       }
     }
-    notifyListeners();
-  }*/
+    return allAvailableEmployees;
+  }
 }

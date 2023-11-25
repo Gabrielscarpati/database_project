@@ -21,10 +21,11 @@ class AppUser extends Entity {
 
   factory AppUser.fromJson(Map<String, dynamic> json) {
     return AppUser(
+      //{last_name: Nguyen, first_name: Emily, userid: 18},
       id: json['userid'] as int,
       lastName: json['last_name'] as String,
       firstName: json['first_name'] as String,
-      email: json['email'] as String,
+      email: json['email'] ?? '',
       phone: json['phone'] ?? '',
       dob: DateTime.parse(json['dob'] ?? '0000-00-00'),
       projectId: json['projectid'] as int?,
