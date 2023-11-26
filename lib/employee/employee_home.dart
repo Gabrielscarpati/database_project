@@ -13,7 +13,7 @@ class EmployeeHome extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: const DSAppBar(
-          title: 'My Projects',
+          title: 'Ms',
         ),
         body: Padding(
           padding: const EdgeInsets.all(12.0),

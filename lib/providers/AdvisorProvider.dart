@@ -31,4 +31,11 @@ class AdvisorProvider with ChangeNotifier {
     projects = await queriesFunctions.getProjectsByAdvisor(advisorId);
     return projects;
   }
+
+  void popToMyProjectsAndRebuildWidget(BuildContext context) {
+    Navigator.pop(context);
+    Future.delayed(const Duration(milliseconds: 200), () {
+      notifyListeners();
+    });
+  }
 }

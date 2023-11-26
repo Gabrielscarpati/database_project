@@ -9,6 +9,7 @@ class Task extends Entity {
   final DateTime dateDue;
   final String lastname;
   final String firstname;
+  final bool completed;
 
   Task({
     required super.id,
@@ -20,10 +21,10 @@ class Task extends Entity {
     required this.dateDue,
     required this.lastname,
     required this.firstname,
+    required this.completed,
   });
 
   factory Task.fromJson(Map<String, dynamic> json) {
-    print(json);
     return Task(
         id: json['taskid'] as int,
         projectId: json['projectid'] as int,
@@ -33,7 +34,8 @@ class Task extends Entity {
         dateCreated: DateTime.parse(json['taskdatecreated'] as String),
         dateDue: DateTime.parse(json['taskdatedue'] as String),
         lastname: json['lastname'] ?? '',
-        firstname: json['firstname'] ?? '');
+        firstname: json['firstname'] ?? '',
+        completed: json['taskcompleted'] as bool);
   }
 
   @override
@@ -48,6 +50,7 @@ class Task extends Entity {
       'taskdatedue': dateDue.toIso8601String(),
       'lastname': lastname,
       'firstname': firstname,
+      'taskcompleted': completed,
     };
   }
 
@@ -61,6 +64,7 @@ class Task extends Entity {
     DateTime? dateDue,
     String? lastname,
     String? firstname,
+    bool? completed,
   }) {
     return Task(
       id: id ?? this.id,
@@ -72,6 +76,7 @@ class Task extends Entity {
       dateDue: dateDue ?? this.dateDue,
       lastname: lastname ?? this.lastname,
       firstname: firstname ?? this.firstname,
+      completed: completed ?? this.completed,
     );
   }
 }

@@ -19,4 +19,11 @@ class TaskProvider with ChangeNotifier {
   TextEditingController taskDescription = TextEditingController();
 
   String selectedEmployeeDropDown = '';
+
+  void popToMyTasksRebuildScreen(BuildContext context) {
+    Navigator.pop(context);
+    Future.delayed(const Duration(milliseconds: 200), () {
+      notifyListeners();
+    });
+  }
 }

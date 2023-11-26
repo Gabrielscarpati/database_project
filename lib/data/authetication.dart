@@ -14,37 +14,69 @@ class QueriesFunctions {
   }
 
   Future<List<Project>> getProjectsByAdvisor(int id) async {
-    dynamic response = await supabase
-        .rpc('get_projects_by_advisor', params: {'advisorid_param': id});
-    List<Project> projects = [];
-    for (var i = 0; i < response.length; i++) {
-      final project = Project.fromJson(response[i]);
-      projects.add(project);
-    }
+    try {
+      dynamic response = await supabase
+          .rpc('get_projects_by_advisor', params: {'advisorid_param': id});
 
-    return projects;
+      if (response == null || response.isEmpty) {
+        throw Exception(
+            'There are no projects assigned by you. Click on the plus button to create a new one.');
+      }
+
+      List<Project> projects = [];
+      for (var i = 0; i < response.length; i++) {
+        final project = Project.fromJson(response[i]);
+        projects.add(project);
+      }
+
+      return projects;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<List<Task>> getTasksByProjectIdForAdvisor(int id) async {
-    dynamic response = await supabase
-        .rpc('tasks_for_projects', params: {'projectid_param': id});
-    List<Task> tasks = [];
-    for (var i = 0; i < response.length; i++) {
-      final project = Task.fromJson(response[i]);
-      tasks.add(project);
+    try {
+      dynamic response = await supabase
+          .rpc('tasks_for_projects', params: {'projectid_param': id});
+
+      if (response == null || response.isEmpty) {
+        throw Exception(
+            'There are no tasks for this project. Click on the plus button to create a new one.');
+      }
+
+      List<Task> tasks = [];
+      for (var i = 0; i < response.length; i++) {
+        final task = Task.fromJson(response[i]);
+        tasks.add(task);
+      }
+
+      return tasks;
+    } catch (e) {
+      rethrow;
     }
-    return tasks;
   }
 
   Future<List<Task>> getTasksByProjectIdForEmployee(int id) async {
-    dynamic response = await supabase
-        .rpc('tasks_for_employee', params: {'employeeid_param': id});
-    List<Task> tasks = [];
-    for (var i = 0; i < response.length; i++) {
-      final project = Task.fromJson(response[i]);
-      tasks.add(project);
+    try {
+      dynamic response = await supabase
+          .rpc('tasks_for_employee', params: {'employeeid_param': id});
+
+      if (response == null || response.isEmpty) {
+        throw Exception(
+            'There are no tasks for you yet! Please wait for your manager to assign you a task.');
+      }
+
+      List<Task> tasks = [];
+      for (var i = 0; i < response.length; i++) {
+        final project = Task.fromJson(response[i]);
+        tasks.add(project);
+      }
+
+      return tasks;
+    } catch (e) {
+      rethrow;
     }
-    return tasks;
   }
 
   Future<int> insertIntoProject(
@@ -111,5 +143,22 @@ class QueriesFunctions {
       'taskdatedue_param': taskDueDate,
     });
     return;
+  }
+
+  Future<void> deleteTask(int projectId, int taskId) async {
+    await supabase.rpc('delete_task',
+        params: {'projectid_param': projectId, 'taskid_param': taskId});
+  }
+
+  Future<void> deleteProject(int projectId) async {
+    await supabase
+        .rpc('make_employee_available_on_project_delete_func', params: {
+      'projectid_param': projectId,
+    });
+  }
+
+  Future<void> toggleTaskCompleted(int taskId) async {
+    await supabase
+        .rpc('toggle_task_completed', params: {'taskid_param': taskId});
   }
 }

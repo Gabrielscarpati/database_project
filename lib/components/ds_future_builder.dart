@@ -56,8 +56,10 @@ class DSFutureBuilder<T> extends StatelessWidget {
   }
 
   Widget _buildLoadingWidget() {
-    return Container(
-        height: 80, width: 80, child: const CircularProgressIndicator());
+    return const Center(
+      child:
+          SizedBox(height: 80, width: 80, child: CircularProgressIndicator()),
+    );
   }
 
   Widget _buildErrorWidget(String error) {

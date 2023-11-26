@@ -11,6 +11,7 @@ import '../components/ds_standard_text.dart';
 import '../components/loading_button.dart';
 import '../components/snackBar.dart';
 import '../data/authetication.dart';
+import '../providers/AdvisorProvider.dart';
 import '../providers/EmployeeProvider.dart';
 import '../providers/ProjectProvider.dart';
 import 'list_signup_city/choose_city_screen.dart';
@@ -43,9 +44,12 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
         Provider.of<EmployeeProvider>(context, listen: true);
     ProjectProvider projectProvider =
         Provider.of<ProjectProvider>(context, listen: true);
+    AdvisorProvider advisorProvider =
+        Provider.of<AdvisorProvider>(context, listen: true);
 
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: const DSAppBar(
           title: 'Create New Project',
           isBackButton: true,
@@ -130,7 +134,7 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ChooseCityScreen()));
+                              builder: (context) => const ChooseCityScreen()));
                     },
                   ),
                 ],
@@ -162,7 +166,7 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                   employees: employeeProvider.availableEmployeesScreen,
                   projectIdParameter: projectId,
                 );
-                Navigator.pop(context);
+                advisorProvider.popToMyProjectsAndRebuildWidget(context);
               }
 
               _controller.reset();

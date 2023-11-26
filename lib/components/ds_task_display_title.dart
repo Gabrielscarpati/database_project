@@ -9,6 +9,7 @@ class DSTaskDisplayTile extends StatelessWidget {
   final DateTime dueDate;
   final DateTime createdDate;
   final String assignedTo;
+  final bool isCompleted;
   const DSTaskDisplayTile({
     Key? key,
     required this.taskName,
@@ -16,6 +17,7 @@ class DSTaskDisplayTile extends StatelessWidget {
     required this.dueDate,
     required this.createdDate,
     required this.assignedTo,
+    required this.isCompleted,
   }) : super(key: key);
 
   @override
@@ -104,11 +106,41 @@ class DSTaskDisplayTile extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const DSStandardText(
-                        text: 'Due Date',
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: DSColors.white,
+                      Row(
+                        children: [
+                          const DSStandardText(
+                            text: 'Due Date',
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: DSColors.white,
+                          ),
+                          const SizedBox(
+                            width: 12.0,
+                          ),
+                          Container(
+                            width: 20,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.fromBorderSide(
+                                BorderSide(
+                                  color:
+                                      isCompleted ? Colors.green : Colors.white,
+                                  width: 1.2,
+                                ),
+                              ),
+                            ),
+                            child: isCompleted
+                                ? const Center(
+                                    child: Icon(
+                                      Icons.check,
+                                      color: Colors.green,
+                                      size: 16,
+                                    ),
+                                  )
+                                : null,
+                          ),
+                        ],
                       ),
                       DSStandardText(
                         text: formatDateTime(dueDate),

@@ -152,7 +152,8 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                   taskDueDate: DateFormat('yyyy-MM-dd')
                       .format(taskProvider.selectedTaskDueDateDateDateTime),
                 );
-                Navigator.pop(context);
+
+                taskProvider.popToMyTasksRebuildScreen(context);
               }
               _controller.reset();
             },
