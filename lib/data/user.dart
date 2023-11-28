@@ -1,14 +1,15 @@
 import 'package:database_project/entity/attributeNames.dart';
+import 'package:database_project/ui/superaAdvisor/superAdvisorSeeAllProjects.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../colors.dart';
 import '../components/snackBar.dart';
-import '../employee/employe_project_view.dart';
 import '../entity/user.dart';
-import '../manager/manager_home.dart';
 import '../providers/AdvisorProvider.dart';
 import '../providers/EmployeeProvider.dart';
+import '../ui/employee/employe_project_view.dart';
+import '../ui/manager/manager_home.dart';
 import 'authetication.dart';
 
 class UserController {
@@ -64,27 +65,36 @@ class UserController {
       final user = AppUser.fromJson(response);
       QueriesFunctions auth = QueriesFunctions();
       bool isAdvisor = await auth.isAdvisor(user.id);
+
       if (isAdvisor) {
         AdvisorProvider().ifAdvisorSetAdvisorId(user.id);
       } else {
         EmployeeProvider().ifEmployeeSetEmployee(user.id);
       }
 
-      isAdvisor
+      user.id == 22
           ? Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => ManagerHome(
+                  builder: (context) => SuperAdvisorSeeAllProjects(
                         advisorId: user.id,
                       )),
             )
-          : Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => EmployeeProjectView(
-                        projectId: user.id,
-                      )),
-            );
+          : isAdvisor
+              ? Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ManagerHome(
+                            advisorId: user.id,
+                          )),
+                )
+              : Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => EmployeeProjectView(
+                            projectId: user.id,
+                          )),
+                );
       return user;
     } catch (e, stackTrace) {
       {

@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
-import '../colors.dart';
-import '../components/DS_app_bar.dart';
-import '../components/ds_future_builder.dart';
-import '../components/ds_task_display_title.dart';
-import '../data/authetication.dart';
-import '../entity/task.dart';
-import '../providers/TaskProvider.dart';
+import '../../colors.dart';
+import '../../components/DS_app_bar.dart';
+import '../../components/ds_future_builder.dart';
+import '../../components/ds_task_display_title.dart';
+import '../../data/authetication.dart';
+import '../../entity/task.dart';
+import '../../providers/TaskProvider.dart';
 import 'create_task_screen.dart';
 
 class ManagerProjectView extends StatefulWidget {

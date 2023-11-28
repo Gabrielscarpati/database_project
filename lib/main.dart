@@ -4,11 +4,10 @@ import 'package:database_project/providers/EmployeeProvider.dart';
 import 'package:database_project/providers/ProjectProvider.dart';
 import 'package:database_project/providers/TaskProvider.dart';
 import 'package:database_project/providers/logInSignUpProvider.dart';
+import 'package:database_project/ui/LogIn/views/LogInBody.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import 'LogIn/viewLogIn.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -63,7 +62,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const ViewLogIn(),
+      home: const LogInBody(),
     );
   }
 }

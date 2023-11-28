@@ -6,7 +6,9 @@ import 'ds_standard_text.dart';
 class DSAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool isBackButton;
-  const DSAppBar({Key? key, required this.title, required this.isBackButton})
+  final Widget? action;
+  const DSAppBar(
+      {Key? key, required this.title, required this.isBackButton, this.action})
       : super(key: key);
 
   @override
@@ -28,6 +30,7 @@ class DSAppBar extends StatelessWidget implements PreferredSizeWidget {
         fontWeight: FontWeight.bold,
         color: DSColors.white,
       ),
+      actions: action != null ? [action!] : null,
     );
   }
 

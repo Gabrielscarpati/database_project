@@ -5,6 +5,7 @@ class Project extends Entity {
   final DateTime dateDue;
   final String title;
   final int advisorId;
+  final double projectCompleted;
 
   Project({
     required super.id,
@@ -12,6 +13,7 @@ class Project extends Entity {
     required this.dateDue,
     required this.title,
     required this.advisorId,
+    required this.projectCompleted,
   });
 
   factory Project.fromJson(Map<String, dynamic> json) {
@@ -21,6 +23,9 @@ class Project extends Entity {
       dateDue: DateTime.parse(json['projectdatedue'] as String),
       title: json['projecttitle'] as String,
       advisorId: json['advisorid'] as int,
+      projectCompleted:
+          double.parse(json['projectcompleted'].toDouble().toStringAsFixed(2)) *
+              100,
     );
   }
 
@@ -32,6 +37,7 @@ class Project extends Entity {
       'projectdatedue': dateDue.toIso8601String(),
       'projecttitle': title,
       'advisorid': advisorId,
+      'projectcompleted': projectCompleted,
     };
   }
 
@@ -41,6 +47,7 @@ class Project extends Entity {
     DateTime? dateDue,
     String? title,
     int? advisorId,
+    double? projectCompleted,
   }) {
     return Project(
       id: id ?? this.id,
@@ -48,6 +55,7 @@ class Project extends Entity {
       dateDue: dateDue ?? this.dateDue,
       title: title ?? this.title,
       advisorId: advisorId ?? this.advisorId,
+      projectCompleted: projectCompleted ?? this.projectCompleted,
     );
   }
 }

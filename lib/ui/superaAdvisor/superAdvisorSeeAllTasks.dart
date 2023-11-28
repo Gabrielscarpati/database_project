@@ -1,36 +1,38 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-import '../colors.dart';
-import '../components/DS_app_bar.dart';
-import '../components/ds_future_builder.dart';
-import '../components/ds_task_display_title.dart';
-import '../data/authetication.dart';
-import '../entity/task.dart';
+import '../../colors.dart';
+import '../../components/DS_app_bar.dart';
+import '../../components/ds_future_builder.dart';
+import '../../components/ds_task_display_title.dart';
+import '../../data/authetication.dart';
+import '../../entity/task.dart';
 
-class EmployeeProjectView extends StatefulWidget {
+class SuperAdvisorSeeAllTasks extends StatefulWidget {
   final int projectId;
-  const EmployeeProjectView({Key? key, required this.projectId})
+  const SuperAdvisorSeeAllTasks({Key? key, required this.projectId})
       : super(key: key);
 
   @override
-  State<EmployeeProjectView> createState() => _EmployeeProjectViewState();
+  State<SuperAdvisorSeeAllTasks> createState() =>
+      _SuperAdvisorSeeAllTasksState();
 }
 
-class _EmployeeProjectViewState extends State<EmployeeProjectView> {
+class _SuperAdvisorSeeAllTasksState extends State<SuperAdvisorSeeAllTasks> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: const DSAppBar(
-          title: 'My Tasks',
-          isBackButton: false,
+          title: 'Created tasks',
+          isBackButton: true,
         ),
         body: Padding(
           padding: const EdgeInsets.all(12.0),
           child: DSFutureBuilder(
             future: QueriesFunctions()
-                .getTasksByProjectIdForEmployee(widget.projectId),
+                .getTasksByProjectIdForAdvisor(widget.projectId),
             builder:
                 (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
               List<Task> tasks = snapshot.data!;
@@ -40,25 +42,22 @@ class _EmployeeProjectViewState extends State<EmployeeProjectView> {
                   return Slidable(
                     endActionPane: ActionPane(
                       motion: const ScrollMotion(),
-                      extentRatio: 0.33,
+                      extentRatio: 0.3,
                       children: [
                         SlidableAction(
                           flex: 5,
                           borderRadius: BorderRadius.circular(10.0),
-                          padding: const EdgeInsets.all(0.0),
                           onPressed: (context) async {
                             await QueriesFunctions()
-                                .toggleTaskCompleted(tasks[index].id);
-                            setState(() {});
+                                .deleteTask(widget.projectId, tasks[index].id);
+                            setState(() {
+                              tasks.removeAt(index);
+                            });
                           },
-                          backgroundColor: tasks[index].completed
-                              ? DSColors.greyScaleMediumGrey
-                              : Colors.green,
+                          backgroundColor: const Color(0xFFE74C3C),
                           foregroundColor: DSColors.white,
-                          icon: Icons.update,
-                          label: tasks[index].completed
-                              ? 'uncompleted'
-                              : 'completed',
+                          icon: CupertinoIcons.delete,
+                          label: 'Delete',
                         ),
                       ],
                     ),

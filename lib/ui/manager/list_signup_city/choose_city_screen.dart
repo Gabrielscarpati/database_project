@@ -1,15 +1,15 @@
 import 'package:database_project/entity/user.dart';
-import 'package:database_project/manager/list_signup_city/standard_list_builder_sign_up.dart';
 import 'package:database_project/providers/EmployeeProvider.dart';
+import 'package:database_project/ui/manager/list_signup_city/standard_list_builder_sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
-import '../../colors.dart';
-import '../../components/DSTextFIeld.dart';
-import '../../components/DS_app_bar.dart';
-import '../../components/ds_future_builder.dart';
-import '../../components/loading_button.dart';
+import '../../../colors.dart';
+import '../../../components/DSTextFIeld.dart';
+import '../../../components/DS_app_bar.dart';
+import '../../../components/ds_future_builder.dart';
+import '../../../components/loading_button.dart';
 
 class ChooseCityScreen extends StatefulWidget {
   const ChooseCityScreen({Key? key}) : super(key: key);

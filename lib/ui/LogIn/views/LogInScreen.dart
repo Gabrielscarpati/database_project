@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
-import '../../colors.dart';
-import '../../components/loading_button.dart';
-import '../../data/user.dart';
-import '../../providers/logInSignUpProvider.dart';
+import '../../../colors.dart';
+import '../../../components/loading_button.dart';
+import '../../../data/user.dart';
+import '../../../providers/logInSignUpProvider.dart';
 import '../text_fields/text_fields.dart';
 
 class LogInScreen extends StatefulWidget {

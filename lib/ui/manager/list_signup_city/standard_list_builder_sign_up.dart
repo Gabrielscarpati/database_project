@@ -2,9 +2,9 @@ import 'package:database_project/components/ds_standard_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../colors.dart';
-import '../../entity/user.dart';
-import '../../providers/EmployeeProvider.dart';
+import '../../../colors.dart';
+import '../../../entity/user.dart';
+import '../../../providers/EmployeeProvider.dart';
 
 class ListBuilderCities extends StatelessWidget {
   final double padding;

@@ -3,19 +3,19 @@ import 'package:database_project/components/ds_standard_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../manager/manager_project_view.dart';
-
 class DSProjectDisplayTitle extends StatelessWidget {
   final Function() onTap;
   final String projectTitle;
   final DateTime dueDate;
   final int projectId;
+  final double projectCompleted;
   const DSProjectDisplayTitle(
       {Key? key,
       required this.onTap,
       required this.projectTitle,
       required this.dueDate,
-      required this.projectId})
+      required this.projectId,
+      required this.projectCompleted})
       : super(key: key);
 
   @override
@@ -24,14 +24,6 @@ class DSProjectDisplayTitle extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 12.0),
       child: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ManagerProjectView(
-                projectId: projectId,
-              ),
-            ),
-          );
           onTap.call();
         },
         child: Container(
@@ -46,20 +38,35 @@ class DSProjectDisplayTitle extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
                   children: [
-                    DSStandardText(
-                      text: 'Title   $projectId',
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: DSColors.white,
-                    ),
-                    DSStandardText(
-                      text: projectTitle,
-                      fontSize: 12,
-                      fontWeight: FontWeight.normal,
-                      color: DSColors.white,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            DSStandardText(
+                              text: 'Title   $projectId',
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: DSColors.white,
+                            ),
+                            const SizedBox(width: 8.0),
+                            DSStandardText(
+                              text: 'completed: $projectCompleted%',
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: DSColors.white,
+                            ),
+                          ],
+                        ),
+                        DSStandardText(
+                          text: projectTitle,
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                          color: DSColors.white,
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -70,7 +77,7 @@ class DSProjectDisplayTitle extends StatelessWidget {
                       children: [
                         const DSStandardText(
                           text: 'Due Date',
-                          fontSize: 14,
+                          fontSize: 13,
                           fontWeight: FontWeight.bold,
                           color: DSColors.white,
                         ),

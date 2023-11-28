@@ -1,42 +1,53 @@
-import 'package:database_project/components/ds_floating_action_button.dart';
 import 'package:database_project/components/ds_future_builder.dart';
+import 'package:database_project/ui/superaAdvisor/createUser.dart';
+import 'package:database_project/ui/superaAdvisor/superAdvisorSeeAllTasks.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:provider/provider.dart';
 
-import '../colors.dart';
-import '../components/DS_app_bar.dart';
-import '../components/ds_project_display_title.dart';
-import '../data/authetication.dart';
-import '../entity/project.dart';
-import '../providers/AdvisorProvider.dart';
-import 'create_project_screen.dart';
+import '../../colors.dart';
+import '../../components/DS_app_bar.dart';
+import '../../components/ds_project_display_title.dart';
+import '../../data/authetication.dart';
+import '../../entity/project.dart';
 
-class ManagerHome extends StatefulWidget {
+class SuperAdvisorSeeAllProjects extends StatefulWidget {
   final int advisorId;
-  const ManagerHome({Key? key, required this.advisorId}) : super(key: key);
+  const SuperAdvisorSeeAllProjects({Key? key, required this.advisorId})
+      : super(key: key);
 
   @override
-  State<ManagerHome> createState() => _ManagerHomeState();
+  State<SuperAdvisorSeeAllProjects> createState() =>
+      _SuperAdvisorSeeAllProjectsState();
 }
 
-class _ManagerHomeState extends State<ManagerHome> {
+class _SuperAdvisorSeeAllProjectsState
+    extends State<SuperAdvisorSeeAllProjects> {
   @override
   Widget build(BuildContext context) {
-    AdvisorProvider advisorProvider =
-        Provider.of<AdvisorProvider>(context, listen: true);
-
     return SafeArea(
       child: Scaffold(
-        appBar: const DSAppBar(
+        appBar: DSAppBar(
           title: 'My Projects',
           isBackButton: false,
+          action: IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CreateUser()),
+              );
+            },
+            icon: const Icon(
+              CupertinoIcons.add,
+              color: DSColors.white,
+              size: 30,
+            ),
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(12.0),
           child: DSFutureBuilder(
-            future: advisorProvider.fetchProjectsByAdvisor(),
+            future: QueriesFunctions().getAllProjects(),
             builder:
                 (BuildContext context, AsyncSnapshot<List<Project>> snapshot) {
               List<Project> projects = snapshot.data!;
@@ -66,10 +77,20 @@ class _ManagerHomeState extends State<ManagerHome> {
                       ],
                     ),
                     child: DSProjectDisplayTitle(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SuperAdvisorSeeAllTasks(
+                              projectId: projects[index].id,
+                            ),
+                          ),
+                        );
+                      },
                       projectTitle: projects[index].title,
                       dueDate: projects[index].dateDue,
                       projectId: projects[index].id,
+                      projectCompleted: projects[index].projectCompleted,
                     ),
                   );
                 },
@@ -77,17 +98,6 @@ class _ManagerHomeState extends State<ManagerHome> {
             },
             messageWhenEmpty: '',
           ),
-        ),
-        floatingActionButton: DsFloatingActionButton(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => CreateProjectScreen(
-                        advisorId: widget.advisorId,
-                      )),
-            );
-          },
         ),
       ),
     );

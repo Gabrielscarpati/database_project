@@ -15,17 +15,28 @@ class QueriesFunctions {
 
   Future<List<Project>> getProjectsByAdvisor(int id) async {
     try {
-      dynamic response = await supabase
+      dynamic response1 = await supabase
           .rpc('get_projects_by_advisor', params: {'advisorid_param': id});
 
-      if (response == null || response.isEmpty) {
+      if (response1 == null || response1.isEmpty) {
         throw Exception(
             'There are no projects assigned by you. Click on the plus button to create a new one.');
       }
 
       List<Project> projects = [];
-      for (var i = 0; i < response.length; i++) {
-        final project = Project.fromJson(response[i]);
+      for (var i = 0; i < response1.length; i++) {
+        final project = Project.fromJson(response1[i]);
+        updateProjectCompletedPercentage(project.id);
+      }
+      dynamic response2 = await supabase
+          .rpc('get_projects_by_advisor', params: {'advisorid_param': id});
+
+      if (response2 == null || response2.isEmpty) {
+        throw Exception(
+            'There are no projects assigned by you. Click on the plus button to create a new one.');
+      }
+      for (var i = 0; i < response2.length; i++) {
+        final project = Project.fromJson(response2[i]);
         projects.add(project);
       }
 
@@ -160,5 +171,61 @@ class QueriesFunctions {
   Future<void> toggleTaskCompleted(int taskId) async {
     await supabase
         .rpc('toggle_task_completed', params: {'taskid_param': taskId});
+  }
+
+  Future<void> updateProjectCompletedPercentage(int projectId) async {
+    await supabase
+        .rpc('update_project_complete', params: {'projectid_param': projectId});
+  }
+
+  Future<void> createUser({
+    required String lastName,
+    required String firstName,
+    required String password,
+    required String email,
+    required String phone,
+    required String dateOfBirth,
+    required bool isAdvisor,
+  }) async {
+    await supabase.rpc('insertuser', params: {
+      'lastname_param': lastName,
+      'firstname_param': firstName,
+      'password_param': password,
+      'email_param': email,
+      'phone_param': phone,
+      'dob_param': dateOfBirth,
+      'isadvisor_param': isAdvisor,
+    });
+  }
+
+  Future<List<Project>> getAllProjects() async {
+    try {
+      dynamic response1 = await supabase.rpc('getallprojects');
+
+      if (response1 == null || response1.isEmpty) {
+        throw Exception(
+            'There are no projects assigned by you. Click on the plus button to create a new one.');
+      }
+
+      List<Project> projects = [];
+      for (var i = 0; i < response1.length; i++) {
+        final project = Project.fromJson(response1[i]);
+        updateProjectCompletedPercentage(project.id);
+      }
+      dynamic response2 = await supabase.rpc('getallprojects');
+
+      if (response2 == null || response2.isEmpty) {
+        throw Exception(
+            'There are no projects assigned by you. Click on the plus button to create a new one.');
+      }
+      for (var i = 0; i < response2.length; i++) {
+        final project = Project.fromJson(response2[i]);
+        projects.add(project);
+      }
+
+      return projects;
+    } catch (e) {
+      rethrow;
+    }
   }
 }

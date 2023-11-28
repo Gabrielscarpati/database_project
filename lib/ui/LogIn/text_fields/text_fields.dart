@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
-import '../../colors.dart';
+import '../../../colors.dart';
 
 class EmailController extends StatelessWidget {
   final TextEditingController emailController;

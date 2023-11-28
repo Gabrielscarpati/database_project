@@ -1,4 +1,4 @@
-import 'package:database_project/LogIn/views/LogInBody.dart';
+import 'package:database_project/ui/LogIn/views/LogInBody.dart';
 import 'package:flutter/cupertino.dart';
 
 class ViewLogIn extends StatelessWidget {
